@@ -1,0 +1,90 @@
+//import logo from './logo.svg';
+//import { unstable_renderSubtreeIntoContainer } from 'react-dom';
+import './App.css';
+import About from './Components/About';
+import Alert from './Components/Alert';
+import Navbar from './Components/Navbar';
+import TextForm from './Components/TextForm';
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+//got added above import after using <navbar/> , as e already had the component under navbar.js
+
+// let name="<b> Ashutosh </b>"
+function App() {
+  const [mode, setMode] = useState('light'); // whether dark mode is enabled or not
+  const [alert, setAlert]= useState(null);
+//setAlert is for to set value for alert
+//showAlert is a function which will help to show the alert messages
+  const showAlert = (message,type)=>{
+    setAlert({
+      msg:message,
+      typ:type
+    })
+    //adding this field to remove alert automatically
+    
+      setTimeout(() => {
+        setAlert(null);
+      }, 1000);
+  }
+  
+  const toggleMode=()=>{
+    if(mode==='light'){ 
+      setMode('dark')
+      
+      document.body.style.backgroundColor="#042743";
+      showAlert("Dark mode enabled" , "success" )
+      
+      // <div className="alert-message" style={{ color: isDarkMode ? 'white' : 'black' }}>
+
+      //for displaying random text on title for changing intervals
+
+      // setInterval(() => {
+      //   document.title="Hello"
+      // }, 2500);
+      // setInterval(() => {
+      //   document.title="welcome"
+      // }, 1500);
+      
+    }
+    else{
+      setMode('light')
+      document.body.style.backgroundColor="white";
+      showAlert("Light mode enabled", "success")
+      
+    }
+   
+  }
+  return (
+    <>
+    <BrowserRouter>
+    
+    {/* <Navbar title="MoBlogs" abouttext="About Me"/> */}
+{/* <Navbar /> */}
+<Navbar title="Text Utility" mode={mode} toggleMode={toggleMode} />
+ {/* here abouttext value is not defined so it will take the value defined under default props */}
+{/* <Alert>This is a alert</Alert> */}
+<Alert alert={alert}/> 
+<div className='container'>
+<Routes>
+  {/* React does partial matching hence using "exact" is a good practice
+  /users--> component1
+  /users/home-->component2 */}
+  {/* div can't be isnide routes so moved outside   */}
+ <Route exat path="/" element={<TextForm showAlert={showAlert} heading="Enter the Text to analyze" mode={mode}/>}></Route>
+ <Route exact path="/about" element={<About />} />
+  {/* <TextForm/> */}
+  {/* <TextForm showAlert={showAlert} heading="Enter the Text to analyze" mode={mode}> </TextForm>
+  <About/> */}
+  
+
+ </Routes>
+  </div>
+ </BrowserRouter>
+    </>
+   
+  );
+}
+
+export default App;
