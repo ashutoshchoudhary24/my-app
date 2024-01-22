@@ -1,5 +1,6 @@
 {
-  "homepage": "https://myusername.github.io/textUtils-react",
+
+  
   
   "name": "my-app",
   
@@ -36,8 +37,7 @@
   
     
   "start": "react-scripts start",
-  "predeploy" : "npm run build",
-  "deploy" : "gh-pages -d build",
+  
     
   "build": "react-scripts build",
   
